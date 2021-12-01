@@ -13,13 +13,10 @@ function computerPlay() {
     return string;
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound() {
     let result;
-    let computerChoice = computerSelection;
-    let playerChoice = playerSelection.trim();
-    playerChoice = playerChoice.toLowerCase();
-    char = playerChoice.charAt(0).toUpperCase();
-    playerChoice = playerChoice.replace(playerChoice.charAt(0), char);
+    let computerChoice = computerPlay();
+    let playerChoice = this.id;
     
     if (playerChoice === "Rock" && computerChoice === "Scissors") {
         result = "You win! Rock beats Scissors."; 
@@ -42,37 +39,45 @@ function playRound(playerSelection, computerSelection) {
     else {
         result = "Draw! " + playerChoice + " ties " + computerChoice + ".";
     }
+    const div = document.querySelector('#Results');
+    div.textContent = result;
+    game(result);
     return result;  
 }
 
-function game() {
-    let numRounds = 5;
-    let playerScore = 0;
-    let computerScore = 0;
-    let finalResult;
-    for (let i = 0; i < numRounds; i++) {
-        let playerSelection = prompt("Enter Rock, Paper, or Scissors to play:", "");
-        let computerSelection = computerPlay();
-        let result = playRound(playerSelection, computerSelection);
-        if (result.substr(4, 3) === "win") {
-            playerScore++;
-        }
-        else if (result.substr(4, 4) === "lose") {
-            computerScore++;
-        }
-        console.log(result);
-        console.log("Player: " + playerScore + " Computer: " + computerScore);
+let playerScore = 0;
+let computerScore = 0;
+
+function game(result) {
+    if (result.substr(4, 3) === "win") {
+        playerScore++;
     }
-    if (playerScore > computerScore) {
-        finalResult = "You win! Final score is " + playerScore + " to " + computerScore + ".";
+    else if (result.substr(4, 4) === "lose") {
+        computerScore++;
     }
-    else if (computerScore > playerScore) {
-        finalResult = "You Lose! Final score is " + playerScore + " to " + computerScore + ".";
+    const div = document.querySelector('#Score');
+    div.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
+
+    if (playerScore == 5) {
+        div.textContent = "You win! Final score is " + playerScore + " to " + computerScore + ".";
+        playerScore = 0;
+        computerScore = 0;
     }
-    else {
-        finalResult = "Draw! Final score is " + playerScore + " to " + computerScore + ".";
+    if (computerScore == 5) {
+        div.textContent = "You Lose! Final score is " + playerScore + " to " + computerScore + ".";
+        playerScore = 0;
+        computerScore = 0;
     }
-    console.log(finalResult);
 }
 
-game();
+document.getElementById('Rock').onclick = playRound;
+document.getElementById('Paper').onclick = playRound;
+document.getElementById('Scissors').onclick = playRound;
+
+/* const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', function() { 
+        playRound(button.textContent, computerPlay());
+    });
+}); */
