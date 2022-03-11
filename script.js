@@ -1,3 +1,4 @@
+// Function to randomly select rock, paper, or scissors and return choice
 function computerPlay() {
     let string;
     let num =  Math.floor(Math.random() * 3);
@@ -13,6 +14,8 @@ function computerPlay() {
     return string;
 }
 
+// Function to take in player choice and compare with random computer choice
+// as well as display and return result
 function playRound() {
     let result;
     let computerChoice = computerPlay();
@@ -45,9 +48,12 @@ function playRound() {
     return result;  
 }
 
+// Initialize player and computer score variables at 0
 let playerScore = 0;
 let computerScore = 0;
 
+// Function to take result from round and adjust score of game as well as
+// display current result and check for winner when one player reaches 5 wins
 function game(result) {
     if (result.substr(4, 3) === "win") {
         playerScore++;
@@ -70,6 +76,7 @@ function game(result) {
     }
 }
 
+// Add event listeners to selection buttons
 document.getElementById('Rock').onclick = playRound;
 document.getElementById('Paper').onclick = playRound;
 document.getElementById('Scissors').onclick = playRound;
